@@ -1,0 +1,11 @@
+# Mounted-harness local generated material
+**/agents/local/**
+!**/agents/local/.gitignore
+
+# Common transient files
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.tmp/
+tmp/
