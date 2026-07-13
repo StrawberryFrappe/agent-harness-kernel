@@ -16,7 +16,10 @@ This project uses a mounted Agent Harness Kernel under `agents/`.
 ## Core Rules
 
 - Do not implement application code until the mounted harness is accepted,
-  unless the user explicitly overrides after risk disclosure.
+  unless the user explicitly overrides after risk disclosure. This gate is
+  unconditional — it is not waived by small scope, high confidence, or complete
+  context. Assumptions you filled from context, even "safe" ones, must be
+  surfaced for the user to double-check before you proceed.
 - Preserve existing project rules and fuse them into this file and `agents/`.
 - Ask the user when product, stack, deployment, evidence, or quality decisions
   are unclear.

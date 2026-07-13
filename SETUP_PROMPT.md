@@ -28,8 +28,14 @@ Run `scripts/harness_doctor.py --root <target-project>` after mounting. Treat
 hard blockers as mount failures and warnings as issues to summarize for the
 user.
 
-Do not implement application code until I accept the mounted harness, unless I
-explicitly override that gate after you explain the risk.
+Then STOP and present the mounted harness for my explicit acceptance. This
+acceptance gate is mandatory and unconditional: it applies no matter how small
+the project is, no matter how confident you are, and no matter how much context
+you already have. Auto-filling docs from prior context is not a substitute for
+my acceptance — it is exactly the case that most needs a double-check. Surface
+every assumption you made (including "safe" ones) and wait. Do not build,
+compile, edit application code, or run project tooling until I accept, unless I
+explicitly override this gate after you explain the risk.
 ```
 
 ## Expected Agent Output

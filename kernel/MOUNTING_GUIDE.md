@@ -26,7 +26,33 @@ target project as `agents/`.
 9. Create a dated review folder under `agents/reviews/YYYYMMDD/` only when it
    contains an actual review.
 10. Run `scripts/harness_doctor.py --root <target>`.
-11. Ask the user to accept or reject the mounted harness.
+11. STOP at the mandatory acceptance gate (below). Ask the user to accept or
+    reject the mounted harness. Do not proceed past this step on your own.
+
+## Mandatory Acceptance Gate
+
+The acceptance gate is unconditional. The agent MUST present the mounted harness
+and wait for explicit user acceptance before any implementation, build, compile,
+application-code edit, or project tooling run.
+
+This holds in every case, with no exceptions for:
+
+- small or single-file projects ("scope too small" is not a waiver);
+- high agent confidence or complete prior context;
+- assumptions the agent judged "safe" — these especially must be double-checked,
+  because a confident wrong assumption is the most expensive kind.
+
+When context let the agent auto-fill docs instead of grilling, that is not a
+shortcut around the gate. The agent must still surface every filled-in
+assumption explicitly and let the user correct it. Skipping the gate because
+"the answers were obvious" is the exact failure this rule exists to prevent.
+
+Only an explicit user override, given after the agent states the risk, may skip
+the gate. Silence, a prior "go ahead" from before the harness existed, or the
+agent's own judgement do not count as an override.
+
+If the agent has already started implementation before acceptance, it must stop,
+disclose exactly what it did, and return to this gate.
 
 ## Existing Project Rules
 
