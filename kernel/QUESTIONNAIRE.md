@@ -34,6 +34,23 @@ and ask only for confirmation.
 - Should the harness create an SRS now?
 - Are C4 or 4+1 diagrams useful for this project?
 
+## Collaboration
+
+Ask these even when the repository looks like one person's work. The answers
+decide naming, language, and whether the harness is shared at all.
+
+- **Does anyone else work in this repository?** If so, how many people?
+- What agent and tooling do they use? A harness written for one agent can
+  mislead another.
+- **What language do they work in?** If contributors do not share a working
+  language, decide which one the harness is written in, and whether translations
+  are expected. Name the canonical language so it does not drift.
+- Will more than one person create ADRs or reviews? If yes, agree author slugs
+  now and record them in an ADR. See the naming rules in the workflow template.
+- Who owns which parts of the codebase, and is that division a preference or a
+  contract?
+- How do decisions reach the people not in this conversation?
+
 ## Quality Bar
 
 - What must be tested?
@@ -52,13 +69,27 @@ and ask only for confirmation.
 ## Workflow
 
 - Should implementation be blocked until harness acceptance?
-- Are subagents available on this platform?
 - Which tasks should be delegated?
 - How should the agent report deviations?
 - What should happen if the user says "just build it"?
+- How is concurrent work isolated, if it happens at all?
 
 ## Privacy And Memory
 
+- Is the harness committed, or kept out of the repository? If it is kept out,
+  what is it being kept from, and for how long?
 - What project facts should be committed?
-- What personal or raw context should stay local under `agents/local/`?
+- What belongs in the local half — machine paths, capabilities, tooling, raw
+  session notes? Apply the test: would another developer's agent get confused if
+  it had this?
 - What should be promoted into ADRs or durable docs?
+
+## Capabilities
+
+These answers go into `agents/local/CAPABILITIES.md`, not into a committed
+document, because they describe one machine rather than the project.
+
+- Which agent and platform is this, and does it have subagents?
+- Which integrations are connected, and which are actually authorised?
+- May the agent create sandboxes or git worktrees?
+- Which binaries and paths does this project need locally?

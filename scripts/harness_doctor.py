@@ -42,6 +42,7 @@ REQUIRED_FILES = [
 # Absence is a warning: the mount works, but the kernel's read order and mounting
 # guide expect these, so a mount without them has probably skipped a step.
 EXPECTED_FILES = [
+    "agents/LOCAL_SETUP.md",
     "agents/intake/ASSUMPTIONS.md",
     "agents/planning/ROADMAP.md",
     "agents/planning/WORK_ITEMS.md",
@@ -189,6 +190,27 @@ def check_local_ignored(root: Path, report: Report) -> None:
             "local-memory",
             "agents/local/.gitignore does not ignore local memory by default",
         )
+
+
+def check_local_mount(root: Path, report: Report, strict: bool) -> None:
+    """The local half of the harness describes this machine and this agent.
+
+    It is never committed, so every fresh clone arrives without it. That is the
+    adaptation mechanism rather than a defect: the harness cannot inherit its
+    author's environment, so each machine is made to describe itself. Without it
+    the harness will either plan work the environment cannot perform, or quietly
+    downgrade a review and not say so.
+    """
+    if (root / "agents" / "local" / "CAPABILITIES.md").exists():
+        return
+    message = (
+        "agents/local/CAPABILITIES.md is missing - the local half of the harness "
+        "is not mounted (see agents/LOCAL_SETUP.md)"
+    )
+    if strict:
+        report.block("local-mount", message)
+    else:
+        report.warn("local-mount", message)
 
 
 def check_root_agents(root: Path, report: Report) -> None:
@@ -343,6 +365,7 @@ def main(argv: list[str] | None = None) -> int:
             report.warn("expected-files", f"missing expected file: {rel}")
 
     check_root_agents(root, report)
+    check_local_mount(root, report, args.strict)
     check_local_ignored(root, report)
     check_adrs(root, report)
     check_references(root, report)

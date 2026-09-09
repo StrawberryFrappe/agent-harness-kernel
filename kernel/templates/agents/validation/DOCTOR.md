@@ -37,6 +37,8 @@ Findings are tagged with a category so severity can be reasoned about per check.
   was never written.
 - `agents/local/` is not actually ignored by git, as reported by `git check-ignore`
   rather than by reading the ignore file.
+- Under `--strict`, the local half of the harness is not mounted — that is,
+  `agents/local/CAPABILITIES.md` does not exist. See GATE-LOCAL.
 - A dated review looks unfilled.
 - `agents/RUN_STATE.md` does not show the current phase.
 - Implementation is marked ready before harness review and user acceptance.
@@ -46,6 +48,8 @@ Findings are tagged with a category so severity can be reasoned about per check.
 
 ## Warnings
 
+- The local half is not mounted. A warning on its own; a blocker under `--strict`,
+  because implementation work depends on knowing what this agent can do.
 - An expected file is missing — the mount works, but the read order expects it.
 - A document cites a path outside `agents/` that does not exist. Softer, because
   such a reference may be kernel-relative or may legitimately have moved.

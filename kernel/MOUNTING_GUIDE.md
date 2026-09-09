@@ -8,12 +8,45 @@ The `kernel/templates/agents/` directory is not an active harness. It is a
 template. The active harness exists only after the agent adapts it into the
 target project as `agents/`.
 
+## A Mount Produces Two Halves
+
+**`agents/`** is project truth: shared, committed, identical for every
+contributor.
+
+**`agents/local/`** is environment truth: capabilities, machine paths, tooling,
+raw session notes. It is never committed — `agents/local/.gitignore` contains `*`
+and `!.gitignore`, so the directory ignores its own contents and arrives empty in
+a fresh clone.
+
+A mount is not finished until both exist. The test for which half something
+belongs to: *would another developer's agent get confused if it had this?*
+
+Because the local half never travels, every clone is forced through its setup.
+That is how the harness re-adapts to each machine instead of arriving preloaded
+with its author's environment. `agents/LOCAL_SETUP.md` is committed precisely so
+the next machine knows what to build.
+
+## More Than One Contributor
+
+Ask the collaboration questions in `QUESTIONNAIRE.md` even when the repository
+looks like one person's work. Two answers change the mount:
+
+- **Author slugs.** If more than one person will create ADRs or reviews, agree
+  slugs during the mount and record them in an ADR. ADRs are separate files, so
+  two people each writing `0006-*.md` produce a silent duplicate that no merge
+  conflict reveals.
+- **Working language.** If contributors do not share one, name the canonical
+  language of the harness and say whether translations are expected, before the
+  documents multiply.
+
 ## Mounting Steps
 
 1. Inspect the target repository before editing.
 2. Inventory existing rules: `AGENTS.md`, `CLAUDE.md`, README, contribution
    docs, CI docs, scripts, tests, and deployment notes.
-3. Run the capability scan. If subagents are unavailable, record the downgrade.
+3. Run the capability scan **into `agents/local/CAPABILITIES.md`**, not into a
+   committed document. It describes one machine and one agent, so it belongs in
+   the local half. If subagents are unavailable, record the downgrade.
 4. Ask the project grill questions in `kernel/QUESTIONNAIRE.md`.
 5. Copy and adapt `kernel/templates/AGENTS.md` into the target root if no
    suitable root agent instructions exist. If they do exist, fuse them instead
