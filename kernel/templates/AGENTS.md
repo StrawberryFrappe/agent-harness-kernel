@@ -12,7 +12,9 @@ This project uses a mounted Agent Harness Kernel under `agents/`.
 6. `agents/intake/SOURCE_MANIFEST.md`
 7. `agents/validation/GATES.md`
 8. `agents/execution/WORKFLOW.md`
-9. Latest relevant review under `agents/reviews/`
+9. `agents/i18n/TRANSLATION_PROTOCOL.md`, when the project carries more than one
+   working language
+10. Latest relevant review under `agents/reviews/`
 
 ## The Local Half
 

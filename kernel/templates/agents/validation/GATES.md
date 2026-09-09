@@ -10,6 +10,7 @@
 | GATE-TEST Tests | Code projects | Relevant tests pass | Test output / CI |
 | GATE-DEPLOY Deployment | Deployable projects | Target deployment verified or blocker recorded | Deployment evidence |
 | GATE-PQ Portfolio Quality | User-facing projects | Visible output is credible, polished, and demonstrable | Screenshots / review |
+| GATE-I18N Translation Currency | Projects carrying more than one working language | Every translated file's `source_sha` matches the current hash of the canonical file it names | `git hash-object --no-filters` per pair |
 
 ## Local Mount Gate
 

@@ -37,7 +37,9 @@ looks like one person's work. Two answers change the mount:
   conflict reveals.
 - **Working language.** If contributors do not share one, name the canonical
   language of the harness and say whether translations are expected, before the
-  documents multiply.
+  documents multiply. Mount `agents/i18n/TRANSLATION_PROTOCOL.md` when the answer
+  is more than one language; it defines how a translated copy tracks its source
+  and how staleness between them is detected. Leave it out of a monolingual mount.
 
 ## Mounting Steps
 

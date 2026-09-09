@@ -44,7 +44,9 @@ decide naming, language, and whether the harness is shared at all.
   mislead another.
 - **What language do they work in?** If contributors do not share a working
   language, decide which one the harness is written in, and whether translations
-  are expected. Name the canonical language so it does not drift.
+  are expected. Name the canonical language so it does not drift, and mount the
+  translation protocol template so the second copy has a defined relationship to
+  the first rather than an assumed one.
 - Will more than one person create ADRs or reviews? If yes, agree author slugs
   now and record them in an ADR. See the naming rules in the workflow template.
 - Who owns which parts of the codebase, and is that division a preference or a

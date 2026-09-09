@@ -26,8 +26,10 @@ machine it landed on. Start at `agents/LOCAL_SETUP.md`.
 10. `agents/architecture/TECH_STACK.md`
 11. `agents/validation/GATES.md`
 12. `agents/execution/WORKFLOW.md`
-13. Latest dated review under `agents/reviews/`
-14. Relevant local logbook notes under `agents/local/logbook/` when available
+13. `agents/i18n/TRANSLATION_PROTOCOL.md`, when the project carries more than one
+    working language
+14. Latest dated review under `agents/reviews/`
+15. Relevant local logbook notes under `agents/local/logbook/` when available
 
 ## Operating Rules
 
