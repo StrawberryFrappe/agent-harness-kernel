@@ -63,12 +63,20 @@ optional.** Without it, git applies whatever line-ending conversion the local
 get two different answers — the protocol would then report drift that does not exist,
 which is worse than reporting none at all. Harness markdown is frequently CRLF, and a
 project that has not pinned line endings in `.gitattributes` cannot assume its
-contributors are configured alike. `--no-filters` hashes the bytes on disk, so it
-answers the same everywhere.
+contributors are configured alike. `--no-filters` hashes the bytes on disk rather
+than a version of them that depends on local configuration.
 
 Checking is the same command run against the current canonical file, compared to the
 value in the translation's frontmatter. A mismatch is a fact, not a verdict — it says
 the source changed, and nothing about whether the change mattered.
+
+**The limit of this, stated plainly:** hashing bytes on disk is deterministic given
+the same bytes on disk, which is not the same as being platform-independent. A
+project whose contributors check out different line endings — some CRLF, some LF —
+will see mismatches on files nobody edited. If that describes the project, pin the
+line endings in `.gitattributes` (`*.md text eol=lf` is the usual answer) so every
+working tree agrees, and the hash becomes stable everywhere. Do that once, at the
+mount, rather than discovering it from a false alarm later.
 
 ## Translate On Touch
 
