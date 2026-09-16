@@ -28,10 +28,9 @@ agent can actually do, instead of inheriting assumptions from whoever mounted it
 4. Verify with the agreed gates.
 5. Review the result.
 6. Update traceability and evidence. Write the narrative of what happened into
-   `agents/record/<SLUG>-<YYYYMMDD>/` — committed, shared, low ceremony. Keep
-   `agents/local/logbook/` for environment truth only: machine paths, capability
-   notes, context-management scratch that would confuse another developer's
-   agent. `agents/execution/LOGBOOK_POLICY.md` routes the rest by kind of fact.
+   `agents/record/<SLUG>-<YYYYMMDD>/` — committed, shared, low ceremony. If you
+   touched `agents/RUN_STATE.md`, this step is not optional. `agents/README.md`
+   routes the rest by kind of fact.
 7. Report what was done, what was delegated, and what remains.
 
 ## Isolating Concurrent Work
@@ -80,8 +79,8 @@ If the user says "just build it" before harness acceptance:
 
 1. Explain the risk.
 2. Ask for explicit override.
-3. If confirmed, record the autonomous decisions and assumptions in the logbook
-   and ADRs where appropriate.
+3. If confirmed, record the autonomous decisions and assumptions in
+   `agents/record/` and ADRs where appropriate.
 4. Keep the smallest viable scope.
 
 ## Drift Protocol
@@ -89,7 +88,7 @@ If the user says "just build it" before harness acceptance:
 If the agent detects it has deviated from the harness:
 
 1. Stop forward implementation work.
-2. Write a logbook entry describing the deviation.
+2. Write a `agents/record/` entry describing the deviation.
 3. Produce or update `agents/execution/HANDOFF.md`.
 4. Tell the user plainly what happened.
 5. Recommend context compression or a fresh continuation when appropriate.

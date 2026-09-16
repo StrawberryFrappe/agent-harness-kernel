@@ -41,10 +41,11 @@ their notes with no conflict. That is the same trick ADRs and `agents/reviews/`
 already use, and neither has ever collided.
 
 It is also why this can be committed at all. A single shared journal file
-conflicts on every session — which is what pushed raw notes into the gitignored
-`agents/local/logbook/` in the first place. What genuinely belongs in the local
-half is **environment** truth: machine paths, capability scans, context notes
-about one agent on one box. The story of what the project did is project truth.
+conflicts on every session, which is the usual reason harnesses exile raw notes
+to a gitignored local directory — where they cannot survive a fresh clone, so
+they are not really a record. What belongs in the local half is **environment**
+truth: machine paths, capability scans, notes about one agent on one box. The
+story of what the project did is project truth, and it is kept here.
 
 ## Not Here
 
@@ -52,4 +53,4 @@ about one agent on one box. The story of what the project did is project truth.
 - **The handoff** — `agents/execution/HANDOFF.md`, emptied when consumed.
 - **Plans** — what could be done and why is `agents/planning/BACKLOG.md`.
 - **Decisions** — an ADR, if it is durable enough to bind future work.
-- **Environment truth** — `agents/local/`.
+- **Environment truth** — `agents/local/`, which is never committed.

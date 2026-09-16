@@ -46,10 +46,8 @@ TBD
 1. `AGENTS.md`
 2. `agents/RUN_STATE.md`
 3. Recent entries under `agents/record/`
-4. Relevant local logbook notes from `agents/local/logbook/YYYYMMDD/`, if
-   available
-5. Latest relevant review under `agents/reviews/`
-6. `agents/planning/BACKLOG.md`
+4. Latest relevant review under `agents/reviews/`
+5. `agents/planning/BACKLOG.md`
 
 ## On Pickup
 

@@ -13,6 +13,12 @@ it should stay roughly the same size over the life of the project. If it is
 growing a dated section per delivery, it has become a changelog — that history
 belongs in `agents/record/`, under a folder per developer per day.
 
+**Changing this file obliges you to write a record entry.** Status says where
+things stand; the record says how they got there. The two move together, and
+`harness_doctor.py` warns when this one advances while the record does not. The
+rule exists because the record is the part everyone skips, and a status note
+with no story behind it is how a project forgets what it learned.
+
 ## Current Phase
 
 Harness mounting pending.

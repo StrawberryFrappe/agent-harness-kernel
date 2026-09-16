@@ -48,7 +48,6 @@ EXPECTED_FILES = [
     "agents/validation/TEST_STRATEGY.md",
     "agents/validation/EVIDENCE_INDEX.md",
     "agents/execution/HANDOFF.md",
-    "agents/execution/LOGBOOK_POLICY.md",
     "agents/record/README.md",
     "agents/architecture/TECH_STACK.md",
 ]
@@ -75,6 +74,18 @@ DATED_DIR = re.compile(r"^(\d{4})(\d{2})(\d{2})$")
 HANDOFF_STALE_DAYS = 7
 HANDOFF_WRITTEN = re.compile(r"^\*\*Written:\*\*\s*(.+?)\s*$", re.MULTILINE)
 ISO_DATE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
+
+# RUN_STATE describes the present, so it should not grow without bound. These are
+# soft shapes, not laws: a dated section per delivery means it has become a
+# changelog, and the record is where that belongs.
+RUN_STATE_MAX_LINES = 200
+DATED_HEADING = re.compile(r"^##\s.*?(\d{4})-(\d{2})-(\d{2})", re.MULTILINE)
+
+# agents/record/<SLUG>-<YYYYMMDD>/. The slug is deliberately loose: a folder that
+# does not match is silently uncounted, which is worse than accepting an odd one.
+RECORD_DIR = re.compile(r"^.+-(\d{4})(\d{2})(\d{2})$")
+# Grace before a status update with no story behind it is worth mentioning.
+RECORD_LAG_DAYS = 3
 
 
 class Report:
@@ -358,6 +369,105 @@ def check_handoff(root: Path, report: Report) -> None:
         )
 
 
+def newest_record_date(root: Path) -> _dt.date | None:
+    record_root = root / "agents" / "record"
+    if not record_root.is_dir():
+        return None
+    dates: list[_dt.date] = []
+    for item in record_root.iterdir():
+        if not item.is_dir():
+            continue
+        match = RECORD_DIR.match(item.name)
+        if not match:
+            continue
+        try:
+            dates.append(_dt.date(*(int(part) for part in match.groups())))
+        except ValueError:
+            continue
+    return max(dates) if dates else None
+
+
+def last_commit_date(root: Path, rel: str) -> _dt.date | None:
+    """Git is authoritative for when a file actually moved; mtime is not.
+
+    Returns None when git cannot answer, so callers skip rather than guess.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "log", "-1", "--format=%cs", "--", rel],
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if result.returncode != 0:
+        return None
+    stamp = result.stdout.strip()
+    match = ISO_DATE.fullmatch(stamp)
+    if not match:
+        return None
+    try:
+        return _dt.date(*(int(part) for part in match.groups()))
+    except ValueError:
+        return None
+
+
+def check_run_state(root: Path, report: Report) -> None:
+    """RUN_STATE is the present tense, and the record is how the present arrived.
+
+    Status was already consolidated here once; without a shape check it simply
+    re-accumulates as a changelog, which is the failure this guards.
+    """
+    run_state = root / "agents" / "RUN_STATE.md"
+    if not run_state.exists():
+        return  # absence is already a required-files blocker
+
+    text = read_text(run_state)
+    rel = "agents/RUN_STATE.md"
+
+    lines = text.count("\n") + 1
+    if lines > RUN_STATE_MAX_LINES:
+        report.warn(
+            "run-state",
+            f"{rel} is {lines} lines (soft limit {RUN_STATE_MAX_LINES}); it "
+            "describes the present, so narrative belongs in agents/record/",
+        )
+
+    dated = {match for match in DATED_HEADING.findall(text)}
+    if len(dated) > 1:
+        report.warn(
+            "run-state",
+            f"{rel} has dated sections for {len(dated)} different dates; that is a "
+            "changelog. Move the history to agents/record/ and keep status current.",
+        )
+
+    # Git decides whether status has actually moved. Sniffing the prose for "TBD"
+    # would mistake a filled RUN_STATE that merely mentions it for an empty one —
+    # the same false negative check_handoff carried until it was given a field to
+    # read. No commits means a fresh mount, which has nothing to couple to yet.
+    changed = last_commit_date(root, rel)
+    if changed is None:
+        return
+
+    newest_record = newest_record_date(root)
+    if newest_record is None:
+        report.warn(
+            "run-state",
+            f"{rel} is under version control but agents/record/ has no dated "
+            "entries. Every change to status should leave a record of how it got "
+            "there.",
+        )
+        return
+
+    lag = (changed - newest_record).days
+    if lag > RECORD_LAG_DAYS:
+        report.warn(
+            "run-state",
+            f"{rel} last changed {changed}, but the newest agents/record/ entry is "
+            f"{newest_record} ({lag} days behind). Status advanced without a story.",
+        )
+
+
 def check_adrs(root: Path, report: Report) -> None:
     adrs = root / "agents" / "adrs"
     if not adrs.is_dir():
@@ -441,6 +551,7 @@ def main(argv: list[str] | None = None) -> int:
     check_references(root, report)
     check_reviews(root, report, args.strict, args.stale_days)
     check_handoff(root, report)
+    check_run_state(root, report)
 
     for path in collect_markdown(root):
         text = read_text(path)
