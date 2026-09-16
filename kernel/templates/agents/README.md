@@ -29,7 +29,9 @@ machine it landed on. Start at `agents/LOCAL_SETUP.md`.
 13. `agents/i18n/TRANSLATION_PROTOCOL.md`, when the project carries more than one
     working language
 14. Latest dated review under `agents/reviews/`
-15. Relevant local logbook notes under `agents/local/logbook/` when available
+15. Recent entries under `agents/record/`, when you need to know what was
+    happening rather than where things stand
+16. Relevant local logbook notes under `agents/local/logbook/` when available
 
 ## Operating Rules
 
@@ -46,9 +48,12 @@ machine it landed on. Start at `agents/LOCAL_SETUP.md`.
   into committed docs.
 - Promote important decisions into ADRs, planning docs, validation docs, or
   architecture docs.
-- Record status in `agents/RUN_STATE.md` only. Planning documents describe what
-  the work is and why; duplicating its state across several files is how those
-  files go stale.
+- Record status in `agents/RUN_STATE.md` only, keep it short, and keep it in the
+  present tense. Planning documents describe what the work is and why;
+  duplicating its state across several files is how those files go stale.
+- Narrative of what happened goes in `agents/record/`, under a folder per
+  developer per day. It is a dump, not a document — write as you go.
+- A handoff is a letter, not a journal. Whoever picks one up empties it.
 - Cite artifacts rather than asserting them. A citation is checkable, and the
   doctor checks that cited paths exist.
 - If harness drift is detected, stop, write a handoff, and ask for continuation

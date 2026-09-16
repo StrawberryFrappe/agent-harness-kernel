@@ -8,6 +8,11 @@ this one says where it stands.
 Write it as the work happens, not as a bookkeeping pass afterwards. A status
 table that needs a separate update step is the first thing to go stale.
 
+**Replace, do not append. Keep it short.** This file describes the present, so
+it should stay roughly the same size over the life of the project. If it is
+growing a dated section per delivery, it has become a changelog — that history
+belongs in `agents/record/`, under a folder per developer per day.
+
 ## Current Phase
 
 Harness mounting pending.

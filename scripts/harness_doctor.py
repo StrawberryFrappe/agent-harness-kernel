@@ -49,6 +49,7 @@ EXPECTED_FILES = [
     "agents/validation/EVIDENCE_INDEX.md",
     "agents/execution/HANDOFF.md",
     "agents/execution/LOGBOOK_POLICY.md",
+    "agents/record/README.md",
     "agents/architecture/TECH_STACK.md",
 ]
 
@@ -67,6 +68,13 @@ LINE_SUFFIX = re.compile(r":\d+$")
 REF_SKIP_TOKENS = ("*", "<", ">", "YYYYMMDD", "://")
 
 DATED_DIR = re.compile(r"^(\d{4})(\d{2})(\d{2})$")
+
+# A handoff is consumed and emptied on pickup, so a live one is single and
+# recent. Deliberately not tied to --stale-days, which is about review cadence:
+# a handoff left sitting for a week is a different problem from a quiet project.
+HANDOFF_STALE_DAYS = 7
+HANDOFF_WRITTEN = re.compile(r"^\*\*Written:\*\*\s*(.+?)\s*$", re.MULTILINE)
+ISO_DATE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
 
 
 class Report:
@@ -287,6 +295,69 @@ def check_reviews(
             )
 
 
+def check_handoff(root: Path, report: Report) -> None:
+    """A handoff is a letter, not a journal: written on stop, emptied on pickup.
+
+    The `Written:` field is the liveness flag — `TBD` means spent, a date means
+    someone is mid-pass. Keying off that rather than the prose avoids mistaking a
+    filled handoff that happens to say "TBD" somewhere for an empty one.
+    """
+    handoff = root / "agents" / "execution" / "HANDOFF.md"
+    if not handoff.exists():
+        return  # absence is already an expected-files warning
+
+    text = read_text(handoff)
+    rel = "agents/execution/HANDOFF.md"
+
+    written = HANDOFF_WRITTEN.search(text)
+    if written is None:
+        report.warn(
+            "handoff",
+            f"{rel} has no `**Written:**` line, so a live handoff cannot be told "
+            "from a consumed one. Restore it from the kernel template.",
+        )
+        return
+
+    value = written.group(1).strip()
+    if value == "TBD":
+        return  # consumed or never written, which is the resting state
+
+    stamps: list[_dt.date] = []
+    for year, month, day in ISO_DATE.findall(value):
+        try:
+            stamps.append(_dt.date(int(year), int(month), int(day)))
+        except ValueError:
+            report.warn("handoff", f"{rel} has an invalid Written date: {year}-{month}-{day}")
+
+    if not stamps:
+        report.warn(
+            "handoff",
+            f"{rel} is live but its Written field is not a date: {value!r}. "
+            "Use YYYY-MM-DD, or set it back to TBD once consumed.",
+        )
+        return
+
+    today = _dt.date.today()
+    newest = max(stamps)
+    if len(set(stamps)) > 1:
+        report.warn(
+            "handoff",
+            f"{rel} names {len(set(stamps))} dates; a handoff is one letter, not a "
+            "journal. Narrative history belongs in agents/record/.",
+        )
+    if newest > today:
+        report.warn("handoff", f"{rel} is dated in the future: {newest}")
+        return
+
+    age = (today - newest).days
+    if age > HANDOFF_STALE_DAYS:
+        report.warn(
+            "handoff",
+            f"{rel} has been live for {age} days (threshold {HANDOFF_STALE_DAYS}); "
+            "was it consumed and never emptied?",
+        )
+
+
 def check_adrs(root: Path, report: Report) -> None:
     adrs = root / "agents" / "adrs"
     if not adrs.is_dir():
@@ -369,6 +440,7 @@ def main(argv: list[str] | None = None) -> int:
     check_adrs(root, report)
     check_references(root, report)
     check_reviews(root, report, args.strict, args.stale_days)
+    check_handoff(root, report)
 
     for path in collect_markdown(root):
         text = read_text(path)
