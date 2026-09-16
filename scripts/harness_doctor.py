@@ -554,6 +554,11 @@ def main(argv: list[str] | None = None) -> int:
     check_run_state(root, report)
 
     for path in collect_markdown(root):
+        # An empty handoff is the correct resting state and is spelled with TBD,
+        # so the generic placeholder sweep would fail every project that has no
+        # handoff in flight. check_handoff judges this file instead.
+        if relative(path, root) == "agents/execution/HANDOFF.md":
+            continue
         text = read_text(path)
         hits = [marker for marker in PLACEHOLDER_MARKERS if marker in text]
         if hits:
