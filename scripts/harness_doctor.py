@@ -45,7 +45,6 @@ EXPECTED_FILES = [
     "agents/LOCAL_SETUP.md",
     "agents/intake/ASSUMPTIONS.md",
     "agents/planning/ROADMAP.md",
-    "agents/planning/WORK_ITEMS.md",
     "agents/validation/TEST_STRATEGY.md",
     "agents/validation/EVIDENCE_INDEX.md",
     "agents/execution/HANDOFF.md",

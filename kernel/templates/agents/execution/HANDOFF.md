@@ -31,4 +31,4 @@ TBD
 3. Relevant local logbook notes from `agents/local/logbook/YYYYMMDD/`, if
    available
 4. Latest relevant review under `agents/reviews/`
-5. Current backlog/work item files
+5. `agents/planning/BACKLOG.md`

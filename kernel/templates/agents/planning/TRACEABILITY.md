@@ -1,11 +1,11 @@
 # Traceability
 
-Traceability links sources, user decisions, ADRs, work items, tests, evidence,
-and final behavior.
+Traceability links sources, user decisions, ADRs, backlog items, tests,
+evidence, and final behavior.
 
-| Trace ID | Source / Decision | Work Item | Verification | Evidence |
+| Trace ID | Source / Decision | Backlog Item | Verification | Evidence |
 |---|---|---|---|---|
-| TR-001 | Kernel mount requested | WI-001 | Harness review | agents/reviews/ |
+| TR-001 | Kernel mount requested | BL-001 | Harness review | agents/reviews/ |
 
 ## Rules
 

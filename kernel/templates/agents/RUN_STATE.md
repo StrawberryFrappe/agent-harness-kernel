@@ -1,5 +1,13 @@
 # Run State
 
+This file is the **single owner of status**. Current phase, what is in progress,
+what is blocked, and what has been verified are recorded here and in no other
+document. Planning and architecture documents say what the work is and why; only
+this one says where it stands.
+
+Write it as the work happens, not as a bookkeeping pass afterwards. A status
+table that needs a separate update step is the first thing to go stale.
+
 ## Current Phase
 
 Harness mounting pending.

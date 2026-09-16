@@ -50,7 +50,7 @@ it. Prefer a temporary commit.
 ## Naming When More Than One Developer Contributes
 
 Most harness IDs live in a single index table each — questions, assumptions,
-backlog items, work items, evidence, sources. Two developers adding to the same
+backlog items, evidence, sources. Two developers adding to the same
 table produce a merge conflict, which is visible and resolvable.
 
 **ADRs are the exception.** They are separate files, so two developers each
