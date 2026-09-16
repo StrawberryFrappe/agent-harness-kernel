@@ -18,8 +18,18 @@ Use `kernel/MOUNTING_GUIDE.md`, `kernel/QUESTIONNAIRE.md`, and
 
 Create or update the project-local `agents/` harness, including current state,
 project profile, source manifest, questions summary, assumptions, ADRs,
-planning docs, architecture docs where useful, validation gates, review
-protocol, capability scan, and local gitignore for agent-only memory.
+planning docs, architecture docs where useful, validation gates, and review
+protocol.
+
+Produce both halves. `agents/` is project truth and is shared. Environment
+truth — what this agent can do, where this checkout lives, which binaries this
+project needs — goes in `agents/local/`, which is never committed, together with
+raw agent memory. Write the capability scan there, not into a committed
+document. Commit `agents/LOCAL_SETUP.md` so the next machine knows what to build.
+
+Ask whether anyone else works in this repository, what tooling and language they
+use, and whether ADRs need author slugs. Ask before assuming it is a solo
+project.
 
 Run a harness review. If subagents are available, use one for review. If not,
 document the downgrade and perform a clearly labeled single-agent review.

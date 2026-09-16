@@ -49,9 +49,26 @@ After mounting, run:
 python scripts/harness_doctor.py --root <target-project>
 ```
 
-After mounting, `agents/local/**` is ignored. Everything else in the mounted
-`agents/` tree is intended to be project-owned documentation and should usually
-be committed.
+A mount produces **two halves**, and is not finished until both exist:
+
+- **`agents/`** — project truth. Shared, committed, identical for every
+  contributor and still accurate next year.
+- **`agents/local/`** — environment truth. Capabilities, machine paths, tooling,
+  raw session notes. Never committed: its own `.gitignore` contains `*` and
+  `!.gitignore`, so the directory ignores its contents and arrives empty in a
+  fresh clone.
+
+The test for which half something belongs to: *would another developer's agent
+get confused if it had this?*
+
+Because the local half never travels, every clone is forced through its setup
+before implementation work. That is the adaptation mechanism rather than a gap —
+a harness cannot inherit its author's environment, so each machine is made to
+describe itself. `agents/LOCAL_SETUP.md` is committed so the next machine knows
+what to build, and `GATE-LOCAL` enforces it.
+
+Whether the shared half is committed to the repository at all is a project
+decision, recorded in its ADR 0001.
 
 ## Non-Goals
 
