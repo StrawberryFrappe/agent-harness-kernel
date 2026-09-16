@@ -46,6 +46,9 @@ machine it landed on. Start at `agents/LOCAL_SETUP.md`.
   into committed docs.
 - Promote important decisions into ADRs, planning docs, validation docs, or
   architecture docs.
+- Record status in `agents/RUN_STATE.md` only. Planning documents describe what
+  the work is and why; duplicating its state across several files is how those
+  files go stale.
 - Cite artifacts rather than asserting them. A citation is checkable, and the
   doctor checks that cited paths exist.
 - If harness drift is detected, stop, write a handoff, and ask for continuation
