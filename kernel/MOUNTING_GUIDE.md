@@ -54,7 +54,9 @@ looks like one person's work. Two answers change the mount:
    suitable root agent instructions exist. If they do exist, fuse them instead
    of overwriting.
 6. Copy relevant template files from `kernel/templates/agents/` into the target
-   `agents/` directory.
+   `agents/` directory. Include `agents/record/README.md` — the record is where
+   narrative history goes, and a mount without it pushes that narrative back
+   into `RUN_STATE.md` and `HANDOFF.md`, which is what rots them.
 7. Adapt copied files to the project. Do not leave placeholder-only files as
    accepted harness docs.
 8. Create or update root `AGENTS.md` so agents discover the mounted harness.

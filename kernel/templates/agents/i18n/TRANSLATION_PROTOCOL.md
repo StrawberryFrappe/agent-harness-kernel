@@ -93,7 +93,7 @@ Translate what a reader working in the non-canonical language must act on. That 
 usually onboarding material, the operating rules they are held to, and the documents
 naming their own area of the codebase.
 
-Not everything earns a translation. Dated records — reviews, evidence entries, logbook
+Not everything earns a translation. Dated records — reviews, evidence entries, record
 notes — are read rarely and by whoever went looking for them; translating them doubles
 the maintenance surface for very little. Decide per document, and record the decision
 somewhere a future contributor will find it rather than re-deriving it.

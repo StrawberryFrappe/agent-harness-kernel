@@ -56,7 +56,6 @@ a text check cannot see a parent negation that would silently undo it.
 | Path | Purpose |
 |---|---|
 | `agents/local/CAPABILITIES.md` | **Required.** Your capability scan and machine facts |
-| `agents/local/logbook/` | Optional. Raw session notes; promote durable facts into committed docs |
 
 Copy `agents/templates/capability-scan-template.md` to
 `agents/local/CAPABILITIES.md` and fill it in. It asks for:
