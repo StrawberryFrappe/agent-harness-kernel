@@ -35,12 +35,24 @@ agent can actually do, instead of inheriting assumptions from whoever mounted it
 
 ## Token Budget And Review Cadence
 
-- **Model tiers for delegation.** Use the cheapest capable subagent tier for
-  documentation and sync work (harness updates, ADR amendments, record entries,
-  RUN_STATE, doc/code consistency passes) and for mechanical tasks (running a set
-  of commands, builds, test runs, file moves, redactions). Use the mid tier for
-  implementation and for real code reviews. Never use the top tier as a subagent.
-  Example, on Claude: haiku / sonnet / never Opus or Fable as subagents.
+- **Model tiers for delegation.** The policy is defined by capability tier, not by
+  vendor, and applies to whichever model family the agent platform runs:
+  - **Top tier** orchestrates: plans, maps the work, synthesizes and reviews
+    subagent output. It is never used as a subagent.
+  - **Mid tier** (one notch below the orchestrator) does implementation and real
+    code reviews.
+  - **Cheapest capable tier** does documentation and sync work (harness updates,
+    ADR amendments, record entries, RUN_STATE, doc/code consistency passes) and
+    mechanical tasks (running a set of commands, builds, test runs, file moves,
+    redactions).
+
+  | Family | Top tier (orchestrator) | Mid tier (implementation, review) | Cheapest tier (docs, mechanical) |
+  |---|---|---|---|
+  | Claude | Opus or Fable | Sonnet | Haiku |
+  | GPT | Astra or Sol | Sol or Terra (one notch below the orchestrator) | Luna |
+
+  For any other family, map its models onto the same three tiers by capability
+  and record the mapping in `agents/local/CAPABILITIES.md`.
 - **Batched review and test passes.** Accumulate small changes and review and
   test them together in one pass (per phase, or before a commit/merge/PR) instead
   of spawning a review or test agent for every minuscule change. Moderate-to-
