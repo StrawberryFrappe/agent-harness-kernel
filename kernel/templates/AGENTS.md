@@ -46,3 +46,5 @@ enforces it.
 - When more than one person contributes, ADR and review filenames carry an
   author slug. See the naming rules in `agents/execution/WORKFLOW.md`.
 - If you detect drift from the harness, stop forward work and produce a handoff.
+- Commits, PRs, branches, tags and repository files carry no AI attribution.
+  See "No AI Attribution" in `agents/execution/WORKFLOW.md`.

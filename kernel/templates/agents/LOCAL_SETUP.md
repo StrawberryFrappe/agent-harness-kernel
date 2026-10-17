@@ -51,6 +51,14 @@ The doctor verifies this by asking `git check-ignore` whether a probe file insid
 `agents/local/` is actually ignored, rather than by reading the ignore file —
 a text check cannot see a parent negation that would silently undo it.
 
+## Setup Steps
+
+Run these once in each clone:
+
+1. **Enable hooks:** `git config core.hooksPath .githooks`. This turns on the
+   `commit-msg` hook that rejects AI attribution in commit messages
+   (`agents/execution/WORKFLOW.md`, "No AI Attribution").
+
 ## What To Create
 
 | Path | Purpose |

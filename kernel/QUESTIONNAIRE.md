@@ -52,6 +52,9 @@ decide naming, language, and whether the harness is shared at all.
 - Who owns which parts of the codebase, and is that division a preference or a
   contract?
 - How do decisions reach the people not in this conversation?
+- **Should commits carry AI attribution?** (default: no). If no, the mount keeps
+  the `commit-msg` hook enabled and the workflow's "No AI Attribution" rule in
+  force. If yes, record the reason in an ADR and the hook is not installed.
 
 ## Quality Bar
 

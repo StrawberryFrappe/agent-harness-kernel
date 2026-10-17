@@ -57,13 +57,18 @@ looks like one person's work. Two answers change the mount:
    `agents/` directory. Include `agents/record/README.md` — the record is where
    narrative history goes, and a mount without it pushes that narrative back
    into `RUN_STATE.md` and `HANDOFF.md`, which is what rots them.
-7. Adapt copied files to the project. Do not leave placeholder-only files as
+7. Copy `kernel/templates/githooks/` to the target's `.githooks/` directory,
+   make `commit-msg` executable, and run `git config core.hooksPath .githooks`
+   in the target repository. The hook rejects AI attribution in commit messages
+   (see the "No AI Attribution" section of the workflow template). Unless the
+   owner says otherwise in `QUESTIONNAIRE.md`, keep it enabled.
+8. Adapt copied files to the project. Do not leave placeholder-only files as
    accepted harness docs.
-8. Create or update root `AGENTS.md` so agents discover the mounted harness.
-9. Create a dated review folder under `agents/reviews/YYYYMMDD/` only when it
-   contains an actual review.
-10. Run `scripts/harness_doctor.py --root <target>`.
-11. STOP at the mandatory acceptance gate (below). Ask the user to accept or
+9. Create or update root `AGENTS.md` so agents discover the mounted harness.
+10. Create a dated review folder under `agents/reviews/YYYYMMDD/` only when it
+    contains an actual review.
+11. Run `scripts/harness_doctor.py --root <target>`.
+12. STOP at the mandatory acceptance gate (below). Ask the user to accept or
     reject the mounted harness. Do not proceed past this step on your own.
 
 ## Mandatory Acceptance Gate

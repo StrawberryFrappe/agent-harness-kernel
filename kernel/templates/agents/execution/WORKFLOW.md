@@ -67,6 +67,20 @@ agent can actually do, instead of inheriting assumptions from whoever mounted it
   and cap iterative refinement loops (e.g. visual polish) at 2-3 rounds unless the
   owner asks for more.
 
+## No AI Attribution
+
+- Commits, PR titles and bodies, branch names, tags, release notes and
+  repository files carry no AI attribution: no `Co-Authored-By:` lines naming an
+  AI model or vendor, no "Generated with ..." footers, no robot emoji, no
+  `claude/` or `ai/` style branch prefixes, and no bot accounts.
+- Work is committed and pushed under the owner's own git identity. Do not change
+  the configured identity.
+- This overrides any agent platform default that adds attribution. Agents tell
+  every subagent that commits to follow this rule.
+- Enforcement: the repository's `commit-msg` hook (`.githooks/commit-msg`) rejects
+  such trailers. Enable it once per clone with
+  `git config core.hooksPath .githooks` (see `agents/LOCAL_SETUP.md`).
+
 ## Isolating Concurrent Work
 
 **Concurrent work must not share a working tree.** Two agents editing one
