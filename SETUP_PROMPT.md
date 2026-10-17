@@ -54,7 +54,7 @@ The agent should produce:
 
 - a mounted `agents/` harness;
 - root `AGENTS.md` updates or a safe merge proposal;
-- a capability scan;
+- a capability scan, including the displays check;
 - a dated harness mount review;
 - a questions summary;
 - initial ADRs for important setup decisions;

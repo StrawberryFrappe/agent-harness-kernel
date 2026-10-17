@@ -72,6 +72,7 @@ Copy `agents/templates/capability-scan-template.md` to
 - which integrations are connected **and authorised**;
 - whether you may create sandboxes or git worktrees;
 - your checkout locations and the binaries this project needs;
+- how many monitors you have, and which one agent-spawned windows should open on;
 - how you isolate parallel work.
 
 Record what you verified, not what you assume. An unverified capability claim is

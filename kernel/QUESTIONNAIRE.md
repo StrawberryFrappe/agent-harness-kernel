@@ -99,3 +99,5 @@ document, because they describe one machine rather than the project.
 - Which integrations are connected, and which are actually authorised?
 - May the agent create sandboxes or git worktrees?
 - Which binaries and paths does this project need locally?
+- Does this machine have more than one monitor, and where should agent-spawned
+  windows open?

@@ -49,6 +49,10 @@ looks like one person's work. Two answers change the mount:
 3. Run the capability scan **into `agents/local/CAPABILITIES.md`**, not into a
    committed document. It describes one machine and one agent, so it belongs in
    the local half. If subagents are unavailable, record the downgrade.
+   Include the displays check from the capability scan template: count the
+   monitors and record their layout. When there is more than one, ask the owner
+   where agent-spawned windows should open, and record the answer in the same
+   local file.
 4. Ask the project grill questions in `kernel/QUESTIONNAIRE.md`.
 5. Copy and adapt `kernel/templates/AGENTS.md` into the target root if no
    suitable root agent instructions exist. If they do exist, fuse them instead
