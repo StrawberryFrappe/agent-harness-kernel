@@ -41,6 +41,9 @@ harness does not record one.
   citation is checkable; an assertion is not.
 - Do not count simulated roles as autonomous review.
 - A blocking review finding must update `agents/RUN_STATE.md`.
+- Small changes are reviewed and tested in batches, per phase or before a commit,
+  merge or PR, not one pass each; see Token Budget And Review Cadence in
+  `agents/execution/WORKFLOW.md`. All code is still reviewed before merge or ship.
 
 ## When More Than One Developer Reviews
 

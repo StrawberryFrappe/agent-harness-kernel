@@ -33,6 +33,28 @@ agent can actually do, instead of inheriting assumptions from whoever mounted it
    routes the rest by kind of fact.
 7. Report what was done, what was delegated, and what remains.
 
+## Token Budget And Review Cadence
+
+- **Model tiers for delegation.** Use the cheapest capable subagent tier for
+  documentation and sync work (harness updates, ADR amendments, record entries,
+  RUN_STATE, doc/code consistency passes) and for mechanical tasks (running a set
+  of commands, builds, test runs, file moves, redactions). Use the mid tier for
+  implementation and for real code reviews. Never use the top tier as a subagent.
+  Example, on Claude: haiku / sonnet / never Opus or Fable as subagents.
+- **Batched review and test passes.** Accumulate small changes and review and
+  test them together in one pass (per phase, or before a commit/merge/PR) instead
+  of spawning a review or test agent for every minuscule change. Moderate-to-
+  complex or critical changes still get their own pass.
+- **Mounting is the exception.** Until the harness is mounted and accepted,
+  document generation (intake, ADRs, architecture, SRS, the mount itself) uses a
+  stronger model, because those documents need its capabilities. The cheapest-
+  tier rule for docs applies only to maintenance of an already-mounted harness.
+- **Non-negotiable:** all code is reviewed and tested before it is merged or
+  shipped. Only the cadence is relaxed, never the coverage.
+- **Keep the fan-out lean.** Run only as many parallel agents as the work needs,
+  and cap iterative refinement loops (e.g. visual polish) at 2-3 rounds unless the
+  owner asks for more.
+
 ## Isolating Concurrent Work
 
 **Concurrent work must not share a working tree.** Two agents editing one

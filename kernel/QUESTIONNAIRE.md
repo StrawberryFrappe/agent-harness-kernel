@@ -72,6 +72,7 @@ decide naming, language, and whether the harness is shared at all.
 
 - Should implementation be blocked until harness acceptance?
 - Which tasks should be delegated?
+- What token/usage budget applies, and which model tiers may subagents use?
 - How should the agent report deviations?
 - What should happen if the user says "just build it"?
 - How is concurrent work isolated, if it happens at all?
